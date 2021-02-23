@@ -2,6 +2,12 @@
 
 - Block XMLRPC
 
+# SSH Keys
+
+```
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
 # Vutlr
 https://www.vultr.com/docs/one-click-wordpress
 - MySQL root PW: /root/.my.cnf
