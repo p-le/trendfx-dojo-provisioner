@@ -1,0 +1,4 @@
+- hosts: trendfx
+  become: true
+  roles:
+  - setup

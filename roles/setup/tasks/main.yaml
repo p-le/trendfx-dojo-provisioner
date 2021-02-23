@@ -1,0 +1,54 @@
+- name: Set timezone to Asia/Tokyo
+  timezone:
+    name: Asia/Tokyo
+  tags:
+    - basic
+
+- name: Update nginx config
+  copy:
+    src: "nginx/{{ item }}"
+    dest: "/etc/nginx/conf.d/{{ item }}"
+  with_items:
+    - wordpress_http.conf
+    - wordpress_https.conf
+  tags:
+    - nginx
+
+- name: Check NGINX config
+  command: nginx -t
+  tags:
+    - nginx
+
+- name: Reload NGINX
+  service:
+    enabled: yes
+    name: nginx
+    state: reloaded
+  tags:
+    - nginx
+
+- name: Update PHP-FPM conf
+  copy:
+    src: "php-fpm/www.conf"
+    dest: "/etc/php/7.3/fpm/pool.d/www.conf"
+  tags:
+    - php-fpm
+
+- name: Reload PHP-FPM
+  service:
+    enabled: yes
+    name: php7.3-fpm
+    state: reloaded
+  tags:
+    - php-fpm
+
+- name: Upload MySQL script
+  copy:
+    src: "scripts/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: 0755
+  with_items:
+    - mysql-memory.sh
+    - connect-sql.sh
+  tags:
+    - mysql

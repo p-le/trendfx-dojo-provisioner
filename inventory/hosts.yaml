@@ -1,0 +1,5 @@
+all:
+  children:
+    trendfx:
+      hosts:
+        45.77.11.251
